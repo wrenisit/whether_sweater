@@ -1,5 +1,6 @@
 class Forecast
-  def initialize(foreast_hash)
+  attr_reader :id, :forecast
+  def initialize(forecast_hash)
     @id = nil
     @forecast = forecast_hash
   end
