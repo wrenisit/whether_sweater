@@ -20,12 +20,16 @@ class ForecastFacade
 
   def find_forecast_future
     geo = GeoService.new
-    geocode = geo.find(@location)
+    geocode = geo.find(@dest)
+    longitude = geocode["results"][0]["geometry"]["location"]["lng"]
+    latitude = geocode["results"][0]["geometry"]["location"]["lat"]
+    geocode_obj = Geocode.new(latitude, longitude)
     geocode_directions = geo.directions(@location, @dest)
     @travel_time = geocode_directions["routes"][0]["legs"][0]["duration"]["text"]
     darksky = DarkskyService.new
-    forecast_hash = darksky.find_future(geocode, future_time)
-    Forecast.new(forecast_hash)
+    forecast_hash = darksky.find_future(geocode_obj, future_time)
+    forecast = Forecast.new(forecast_hash)
+    Munchies.new(forecast, @travel_time)
   end
 
   def future_time
