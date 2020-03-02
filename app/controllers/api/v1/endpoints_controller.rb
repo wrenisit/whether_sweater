@@ -15,10 +15,12 @@ class Api::V1::EndpointsController < ApplicationController
     start = params[:start]
     end_location = params[:end]
     food = params[:food]
-    # google = Faraday.get("https://maps.googleapis.com/maps/api/directions/json?origin=#{start}&destination=#{end_location}&key=#{ENV['GEOCODE_KEY']}")
     google = Faraday.get("https://maps.googleapis.com/maps/api/directions/json?origin=#{start}&destination=#{end_location}&key=#{ENV['GEOCODE_KEY']}")
     directions_hash = JSON.parse(google.body)
-    duration = directions_hash["routes"][0]["legs"][0]["duration"]["text"]
+    travel_time = directions_hash["routes"][0]["legs"][0]["duration"]["text"]
+    end_location = params[:end]
+    forecast = ForecastFacade.new(params[:end])
+    render json: ForecastSerializer.new(forecast.find_forecast_future)
     binding.pry
   end
 end

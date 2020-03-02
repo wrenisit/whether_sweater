@@ -16,4 +16,10 @@ class ForecastFacade
     forecast_hash = darksky.find(geocode)
     Forecast.new(forecast_hash)
   end
+
+  def find_forecast_future
+    darksky = DarkskyService.new
+    forecast_hash = darksky.find_future(geocode, time)
+    Forecast.new(forecast_hash)
+  end
 end
