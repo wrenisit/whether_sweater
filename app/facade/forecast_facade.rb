@@ -38,6 +38,6 @@ class ForecastFacade
     geocode_directions = geo.directions(@location, @dest)
     @travel_time = geocode_directions["routes"][0]["legs"][0]["duration"]["text"]
     time = @travel_time.split(" ")
-    Time.now.to_i + (time[0].to_i * 60 * 60) + (time[2].to_i * 60)       
+    Time.now.to_i + (time[0].to_i * 60 * 60) + (time[2].to_i * 60)
   end
 end
