@@ -5,6 +5,7 @@ class MunchiesFacade
   end
 
   def find_food
-    restaurant = Restaurant.new(@food, @location)
+    restaurant = Restaurant.new
+    restaurant.find_restaurant(@food, @location)
   end
 end
