@@ -1,6 +1,7 @@
 class ForecastFacade
-  def initialize(loc)
+  def initialize(loc, dest = loc)
     @location = loc
+    @dest = dest || nil
   end
 
   def geocode
@@ -18,8 +19,17 @@ class ForecastFacade
   end
 
   def find_forecast_future
+    geo = GeoService.new
+    geocode = geo.find(@location)
+    geocode_directions = geo.directions(@location, @dest)
+    @travel_time = geocode_directions["routes"][0]["legs"][0]["duration"]["text"]
     darksky = DarkskyService.new
-    forecast_hash = darksky.find_future(geocode, time)
+    forecast_hash = darksky.find_future(geocode, future_time)
     Forecast.new(forecast_hash)
+  end
+
+  def future_time
+    time = @travel_time.split(" ")
+    Time.now + (time[0].to_i * 60 * 60) + (time[2].to_i * 60)
   end
 end
