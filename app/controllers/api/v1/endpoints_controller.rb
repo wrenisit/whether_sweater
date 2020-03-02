@@ -14,7 +14,6 @@ class Api::V1::EndpointsController < ApplicationController
   def munchies
     food = params[:food]
     forecast = ForecastFacade.new(params[:start], params[:end])
-    render json: MunchiesSerializer.new(forecast.find_forecast_future, )
-    binding.pry
+    render json: MunchiesSerializer.new(forecast.find_forecast_future, forecast.future_time )
   end
 end
