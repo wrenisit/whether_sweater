@@ -17,4 +17,12 @@ RSpec.describe "as a visitor", :vcr do
     expect(response).to have_http_status(:bad_request)
     expect(response.body).to eq("Invalid Credentials")
   end
+
+  it "doesn't allow a post to login if email is bad" do
+    user = User.create(email: 'ex@ample.com', password: 'password', api_key: "bsEZs9X7eyzX3sud36H8Z2bF")
+    post '/api/v1/sessions', params: { :email => 'notex@ample.com', :password => 'password'}
+    expect(response.status).to eq(400)
+    expect(response).to have_http_status(:bad_request)
+    expect(response.body).to eq("Invalid Credentials")
+  end
 end
