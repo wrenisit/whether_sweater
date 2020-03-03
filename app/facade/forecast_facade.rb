@@ -16,4 +16,5 @@ class ForecastFacade
     forecast_hash = darksky.find(geocode)
     Forecast.new(forecast_hash, @location)
   end
+
 end
