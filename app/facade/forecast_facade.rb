@@ -8,7 +8,7 @@ class ForecastFacade
     geocode = geo.find(@location)
     longitude = geocode["results"][0]["geometry"]["location"]["lng"]
     latitude = geocode["results"][0]["geometry"]["location"]["lat"]
-    Geocode.new(latitude, longitude)
+    geohash = {lat: latitude, lon: longitude}
   end
 
   def find_forecast
