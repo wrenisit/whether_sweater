@@ -5,20 +5,11 @@ RSpec.describe "as a visitor", :vcr do
     get '/api/v1/antipode?location=Hong Kong'
 
     expected = {
-    "data": [
-        {
-            "id": "null",
-            "type": "antipode",
-            "attributes": {"location_name": "Antipode City Name",
-                "forecast": {
-                    "summary": "Mostly Cloudy",
-                    "current_temperature": "72",
-                                },
-            "search_location": "Hong Kong"
-            }
-        }
-    ]
-}
+    "data": [{"id": "null", "type": "antipode",
+        "attributes": {"location_name": "Antipode City Name",
+            "forecast": {"summary": "Mostly Cloudy",
+              "current_temperature": "72"}, "search_location": "Hong Kong"}}]}
     expect(response).to be_successful
+    expect(response.body).to eq(expected)
   end
 end
