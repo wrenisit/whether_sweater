@@ -8,6 +8,9 @@ class AntipodeFacade < ForecastFacade
     coordinates = JSON.parse(coordinates_hash.body)["data"]["attributes"]
   end
 
+  def antipode_city
+    city_hash = GeoService.new.find_city(antipode_coordinates)
+  end
   private
 
   def conn
