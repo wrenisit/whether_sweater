@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/backgrounds', to: 'endpoints#backgrounds'
       get '/forecast', to: 'endpoints#index'
+      post '/users', to: 'users#create'
     end
   end
 end
