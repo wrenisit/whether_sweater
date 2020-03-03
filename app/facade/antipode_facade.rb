@@ -4,8 +4,12 @@ class AntipodeFacade < ForecastFacade
     @location_name = city_name
   end
 
+  def make_data
+    Antipode.new(condensed_forecast, @location, @location_name)
+  end
+
   def antipode_coordinates
-    coordinates_hash = AntipodeService.new.request_anti
+    coordinates_hash = AntipodeService.new.request_anti(geocode)
     coordinates = JSON.parse(coordinates_hash.body)["data"]["attributes"]
   end
 
@@ -14,11 +18,6 @@ class AntipodeFacade < ForecastFacade
   end
 
   def condensed_forecast
-    darksky = DarkskyService.new
-    forecast_hash = darksky.find(geocode)
-    forecast = Hash.new
-    forecast["summary"] = forecast_hash["currently"]["summary"]
-    forecast["current_temperature"] = forecast_hash["currently"]["temperature"]
-    Antipode.new(forecast, @location, @location_name)
+    DarkskyService.new.forecast_condensed(antipode_coordinates)
   end
 end
