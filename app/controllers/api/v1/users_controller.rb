@@ -1,11 +1,12 @@
 class Api::V1::UsersController < ApplicationController
   def create
     api_key = generate_api_key
-    user = User.new(params_permit, api_key)
+    user = User.new(params_permit)
     if user.save
-      render json:(user.api_key), render status: 201
+      user.update(api_key: api_key)
+      render :json => (user.api_key), :status => 201
     else
-      render json:("Invalid Credentials. Please try again."), render status: 400
+      render :json => ("Invalid Credentials. Please try again."), :status => 400
     end
   end
 
