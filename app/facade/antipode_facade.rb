@@ -1,11 +1,10 @@
 class AntipodeFacade < ForecastFacade
   def initialize(loc)
     @location = loc
-    @location_name = city_name
   end
 
   def make_data
-    Antipode.new(condensed_forecast, @location, @location_name)
+    Antipode.new(condensed_forecast, @location, city_name)
   end
 
   def antipode_coordinates
