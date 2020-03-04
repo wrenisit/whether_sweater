@@ -8,5 +8,5 @@ RSpec.describe "as a visitor", :vcr do
     expect(response).to be_successful
     expect(response.status).to eq(200)
     expect(response).to have_http_status(:success)
-
   end
+end
