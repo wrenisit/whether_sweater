@@ -9,7 +9,8 @@ class RoadTripFacade
   end
 
   def travel_time
-    
+    geo = GeoService.new.directions(@start, @end_location)
+    geo["routes"][0]["legs"][0]["duration"]["text"]
   end
 
   def condensed_forecast_future
