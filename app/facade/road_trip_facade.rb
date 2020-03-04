@@ -14,6 +14,10 @@ class RoadTripFacade
   end
 
   def condensed_forecast_future
+    DarkskyService.new.forecast_condensed(@destination, arrival_time)
+  end
+
+  def arrival_time
 
   end
 end
